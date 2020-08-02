@@ -4,6 +4,7 @@ const express = require("express");
 const path = require("path");
 const fs = require ("fs");
 const { v4: uuidv4 } = require('uuid');
+const dbjson = require("./db/db.json");
 
 // Set Up the Express App ======================================
 
@@ -32,11 +33,12 @@ app.get("*", (req, res) => {
 //API  GET Routes ===================================================
 
 app.get("/api/notes", (req, res) => {
-    req.json (dbjson);
+    res.json(dbjson);
     
 });
 
 // API Post Route ===================================================
+
 app.post("/api/notes.html", (req, res) => {
     req.body.id = uuidv4();
     dbjson.push(req.body);
@@ -47,6 +49,17 @@ app.post("/api/notes.html", (req, res) => {
 
 // API Delete Route
 
+app.delete("/api/notes/:id", (req, res) => {
+    console.log(req.params.id);
+    for(let i = 0; i < dbjson.length; i++) {
+        if (dbjson[1].id === req.params.id) {
+            dbjson.splice(i, 1);
+        }
+    }
+    writeToFile("/db/db.json", JSON.stringify(dbjson));
+    res.json(dbjson);
+
+})
 
 // Write To File function ====================================
 
