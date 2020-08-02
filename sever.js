@@ -38,3 +38,14 @@ app.get("/api/notes.html", (req, res) => {
 
 // API Delete Route
 
+
+// Write To File function
+
+function writeToFile (fileName, data) {
+    fs.writeFile(fileName, data, err => {
+        if (err) {
+            throw err;
+        }
+        console.log ("Successful");
+    });
+}
