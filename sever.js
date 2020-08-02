@@ -3,6 +3,7 @@
 const express = require("express");
 const path = require("path");
 const fs = require ("fs");
+const { v4: uuidv4 } = require('uuid');
 
 // Set Up the Express App ======================================
 
@@ -18,7 +19,7 @@ app.use(express.static("public"));
 
 // Notes html route =================================================
 
-app.get("/notes.html", (req, res) => {
+app.get("/notes", (req, res) => {
     res.sendFile(path.resolve(__dirname, "public/notes.html"));
 });
 
@@ -28,19 +29,21 @@ app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "public/index.html"));
 });
 
-//API  GET Routes
+//API  GET Routes ===================================================
 
-app.get("/api/notes.html", (req, res) => {
+app.get("/api/notes", (req, res) => {
+    req.json (dbjson);
+    
+});
+
+// API Post Route ===================================================
+app.post("/api/notes.html", (req, res) => {
     req.body.id = uuidv4();
     dbjson.push(req.body);
-    writeToFile(".db/db.json", JSON.stringify(dbjson));
+    writeToFile("./db/db.json", JSON.stringify(dbjson));
     console.log(dbjson);
     res.json(dbjson);
 });
-
-
-// API Post Route
-
 
 // API Delete Route
 
