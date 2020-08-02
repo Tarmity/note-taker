@@ -8,6 +8,10 @@ const fs = require ("fs");
 const app = express()
 const PORT= 8080; 
 
+//Set up the express app to handle data parsing ================
+app.use(express.urlencoded({ extended: true}));
+app.use(express.json());
+
 
 // Html routes 
 
