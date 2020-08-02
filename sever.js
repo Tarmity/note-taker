@@ -16,10 +16,16 @@ app.use(express.json());
 app.use(express.static("public"));
 
 
-// Html routes =================================================
+// Notes html route =================================================
 
 app.get("/notes.html", (req, res) => {
     res.sendFile(path.resolve(__dirname, "public/notes.html"));
+});
+
+// Index html route =================================================
+
+app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "public/index.html"));
 });
 
 //API  GET Routes
@@ -39,7 +45,7 @@ app.get("/api/notes.html", (req, res) => {
 // API Delete Route
 
 
-// Write To File function
+// Write To File function ====================================
 
 function writeToFile (fileName, data) {
     fs.writeFile(fileName, data, err => {
