@@ -46,7 +46,7 @@ app.post("/api/notes", (req, res) => {
 app.delete("/api/notes/:id", (req, res) => {
     console.log(req.params.id);
     for(let i = 0; i < dbjson.length; i++) {
-        if (dbjson[1].id === req.params.id) {
+        if (dbjson[i].id === req.params.id) {
             dbjson.splice(i, 1);
         }
     }
@@ -74,4 +74,4 @@ function writeToFile (fileName, data) {
         }
         console.log ("Successful");
     });
-}
+};
