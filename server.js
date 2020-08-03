@@ -8,15 +8,14 @@ const dbjson = require("./db/db.json");
 
 // Set Up the Express App ======================================
 
-const app = express()
-const PORT= 8080; 
+const app = new express()
+const PORT= process.env.PORT || 8080;
 
 //Set up the express app to handle data parsing ================
 
+app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
-app.use(express.static("public"));
-
 
 // Notes html route =================================================
 
@@ -24,11 +23,6 @@ app.get("/notes", (req, res) => {
     res.sendFile(path.resolve(__dirname, "public/notes.html"));
 });
 
-// Index html route =================================================
-
-app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "public/index.html"));
-});
 
 //API  GET Routes ===================================================
 
@@ -39,7 +33,7 @@ app.get("/api/notes", (req, res) => {
 
 // API Post Route ===================================================
 
-app.post("/api/notes.html", (req, res) => {
+app.post("/api/notes", (req, res) => {
     req.body.id = uuidv4();
     dbjson.push(req.body);
     writeToFile("./db/db.json", JSON.stringify(dbjson));
@@ -56,10 +50,20 @@ app.delete("/api/notes/:id", (req, res) => {
             dbjson.splice(i, 1);
         }
     }
-    writeToFile("/db/db.json", JSON.stringify(dbjson));
+    writeToFile("./db/db.json", JSON.stringify(dbjson));
     res.json(dbjson);
 
-})
+});
+
+// Index html route =================================================
+
+app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "public/index.html"));
+});
+
+app.listen(PORT, () => {
+    console.log("App listening on port: " +PORT);
+});
 
 // Write To File function ====================================
 
