@@ -32,7 +32,7 @@ Once you are on the home page click the button to get started, it will bring up 
 
 ## Credits
 
-Tarmity Flassman, ScreenCast.
+Developed to spec by Tarmity Flassman, ScreenCast.
 
 ## License
   * MIT
